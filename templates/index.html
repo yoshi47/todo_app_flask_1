@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>ToDoアプリケーション</title>
+    <style>
+        main {
+            width: 60%;
+            border: solid 1px #ccc;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        form, h1, p {
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        hr {
+            width: 50%;
+        }
+    </style>
+</head>
+<body>
+
+<div id="main">
+    <form method="POST">
+        <input type="text" name="content" size="35" placeholder="17:00までに牛乳を1本買う"><br>
+        <input type="submit" value="追加">
+    </form>
+
+    <h1>TODO</h1>
+
+    {% for task in tasks %}
+        <form method="POST" action="/update">
+            <input type="text" name="content" value="{{ task[1] }}">
+            <input type="hidden" name="task_id" value="{{ task[0] }}">
+            <input type="submit" value="更新" class="btn">
+        </form>
+
+        <form method="POST" action="done">
+            <input type="hidden" name="task_id" value="{{ task[0] }}">
+            <input type="submit" value="完了" class="btn">
+        </form>
+        <hr>
+    {% endfor %}
+    <h1>完了したTODO</h1>
+
+    {% for task in done_tasks %}
+        <p>{{ task[1] }}</p>
+    {% endfor %}
+</div>
+</body>
+</html>
